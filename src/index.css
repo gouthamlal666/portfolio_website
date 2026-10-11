@@ -1,0 +1,227 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;1,300&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Warm obsidian + champagne */
+    --background: 30 8% 4%;
+    --foreground: 40 20% 92%;
+
+    --card: 30 6% 6.5%;
+    --card-foreground: 40 20% 92%;
+
+    --popover: 30 6% 7%;
+    --popover-foreground: 40 20% 92%;
+
+    --primary: 38 46% 64%;
+    --primary-foreground: 30 10% 6%;
+    --primary-glow: 38 60% 74%;
+
+    --secondary: 30 5% 13%;
+    --secondary-foreground: 40 20% 92%;
+
+    --muted: 30 5% 11%;
+    --muted-foreground: 35 6% 60%;
+
+    --accent: 38 46% 64%;
+    --accent-foreground: 30 10% 6%;
+
+    --destructive: 0 70% 55%;
+    --destructive-foreground: 40 22% 96%;
+
+    --border: 30 6% 14%;
+    --input: 30 6% 16%;
+    --ring: 38 46% 64%;
+
+    --radius: 1.25rem;
+
+    --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+
+    --sidebar-background: 30 8% 4%;
+    --sidebar-foreground: 40 20% 92%;
+    --sidebar-primary: 38 46% 64%;
+    --sidebar-primary-foreground: 30 10% 6%;
+    --sidebar-accent: 30 5% 11%;
+    --sidebar-accent-foreground: 40 20% 92%;
+    --sidebar-border: 30 6% 14%;
+    --sidebar-ring: 38 46% 64%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-family: 'Montserrat', system-ui, sans-serif;
+    font-weight: 400;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1, h2, h3, h4 {
+    font-weight: 300;
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  ::selection {
+    background: hsl(var(--primary) / 0.35);
+    color: hsl(var(--foreground));
+  }
+
+  :focus-visible {
+    outline: 1px solid hsl(var(--primary));
+    outline-offset: 4px;
+    border-radius: 6px;
+  }
+
+  /* Film grain */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 60;
+    opacity: 0.035;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  ::-webkit-scrollbar { width: 8px; height: 8px; }
+  ::-webkit-scrollbar-track { background: hsl(var(--background)); }
+  ::-webkit-scrollbar-thumb { background: hsl(var(--border)); border-radius: 8px; }
+  ::-webkit-scrollbar-thumb:hover { background: hsl(var(--primary) / 0.5); }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+@layer components {
+  .container-x {
+    @apply mx-auto w-full max-w-[1280px] px-5 sm:px-8 lg:px-12;
+  }
+
+  /* Small uppercase label */
+  .eyebrow {
+    @apply text-[10.5px] font-semibold uppercase leading-none tracking-[0.28em] text-muted-foreground;
+  }
+
+  /* Section / display headings */
+  .heading-xl {
+    @apply font-light leading-[1.08] tracking-[-0.03em];
+    font-size: clamp(1.9rem, 1.2rem + 3.2vw, 3.75rem);
+  }
+
+  .heading-lg {
+    @apply font-light leading-[1.12] tracking-[-0.025em];
+    font-size: clamp(1.6rem, 1.2rem + 1.6vw, 2.5rem);
+  }
+
+  .heading-md {
+    @apply font-normal leading-tight tracking-[-0.015em];
+    font-size: clamp(1.25rem, 1.1rem + 0.6vw, 1.6rem);
+  }
+
+  .body-lg {
+    @apply leading-[1.75] text-muted-foreground;
+    font-size: clamp(0.98rem, 0.92rem + 0.3vw, 1.125rem);
+  }
+
+  .body {
+    @apply text-[14.5px] leading-[1.8] text-muted-foreground;
+  }
+
+  .stat-num {
+    @apply font-extralight leading-none tracking-[-0.04em] text-foreground;
+    font-size: clamp(2.25rem, 1.6rem + 2.6vw, 3.75rem);
+  }
+
+  .chip {
+    @apply inline-flex items-center rounded-full border border-border bg-foreground/[0.02] px-3 py-1.5 text-[12px] font-medium tracking-[0.01em] text-foreground/75 transition-colors duration-300;
+  }
+  .chip:hover {
+    @apply border-primary/40 text-foreground;
+  }
+
+  .btn-primary {
+    @apply inline-flex min-h-[48px] items-center justify-center gap-2.5 whitespace-nowrap rounded-full bg-primary px-7 text-[12px] font-semibold uppercase tracking-[0.16em] text-primary-foreground transition-all duration-500;
+    transition-timing-function: var(--ease-out);
+    box-shadow: 0 10px 30px -12px hsl(var(--primary) / 0.55);
+  }
+  .btn-primary:hover {
+    background: hsl(var(--primary-glow));
+    box-shadow: 0 16px 40px -14px hsl(var(--primary) / 0.7);
+  }
+
+  .btn-ghost {
+    @apply inline-flex min-h-[48px] items-center justify-center gap-2.5 whitespace-nowrap rounded-full border border-foreground/20 px-7 text-[12px] font-semibold uppercase tracking-[0.16em] text-foreground transition-all duration-500;
+    transition-timing-function: var(--ease-out);
+  }
+  .btn-ghost:hover {
+    @apply border-primary/60 text-primary;
+  }
+
+  .btn-primary svg,
+  .btn-ghost svg {
+    transition: transform 0.5s var(--ease-out);
+  }
+  .btn-primary:hover svg,
+  .btn-ghost:hover svg {
+    transform: translate(2px, -2px);
+  }
+
+  .link-underline {
+    background-image: linear-gradient(currentColor, currentColor);
+    background-size: 0% 1px;
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+    transition: background-size 0.6s var(--ease-out);
+  }
+  .link-underline:hover {
+    background-size: 100% 1px;
+  }
+
+  .text-champagne {
+    background: linear-gradient(115deg, hsl(40 62% 82%) 0%, hsl(37 45% 62%) 50%, hsl(40 58% 78%) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .card-surface {
+    @apply rounded-[var(--radius)] border border-border bg-card;
+    background-image: linear-gradient(180deg, hsl(40 30% 90% / 0.025), transparent 45%);
+  }
+
+  /* Grid whose cells are separated by perfect 1px hairlines at every breakpoint */
+  .hairline-grid {
+    @apply grid gap-px overflow-hidden border border-border bg-border;
+  }
+  .hairline-grid > * {
+    @apply bg-background;
+  }
+
+  /* Text that scales with its container's width */
+  .fit {
+    container-type: inline-size;
+  }
+}
