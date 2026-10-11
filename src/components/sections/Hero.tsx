@@ -24,7 +24,9 @@ const Mask = ({ children, delay, className }: { children: ReactNode; delay: numb
 export const Hero = () => {
   const ref = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
-  const photoY = useTransform(scrollYProgress, [0, 1], ["0%", "12%"]);
+  // The photo layer is 120% tall and starts 10% above its frame, so drifting it down by
+  // up to 8% of its own height (~9.6% of the frame) never exposes an edge.
+  const photoY = useTransform(scrollYProgress, [0, 1], ["0%", "8%"]);
   const contentY = useTransform(scrollYProgress, [0, 1], ["0%", "-6%"]);
   const fade = useTransform(scrollYProgress, [0, 0.75], [1, 0]);
 
@@ -40,9 +42,9 @@ export const Hero = () => {
           initial={{ opacity: 0, scale: 1.04 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1.8, ease }}
-          className="absolute inset-x-0 top-0 -z-10 h-[70svh] md:h-[78svh] lg:inset-y-0 lg:left-auto lg:right-0 lg:h-full lg:w-[54%]"
+          className="absolute inset-x-0 top-0 -z-10 h-[70svh] overflow-hidden md:h-[78svh] lg:inset-y-0 lg:left-auto lg:right-0 lg:h-full lg:w-[54%]"
         >
-          <motion.div style={{ y: photoY }} className="h-full w-full overflow-hidden">
+          <motion.div style={{ y: photoY }} className="absolute inset-x-0 top-[-10%] h-[120%] overflow-hidden">
             <img
               src={portrait}
               alt={`Portrait of ${profile.firstName} ${profile.lastName}`}
