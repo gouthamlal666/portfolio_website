@@ -61,14 +61,14 @@ const ProjectVisual = ({ project, index }: { project: Project; index: number }) 
 
         <dl className="grid grid-cols-3 gap-3 border-t border-border pt-4 sm:pt-5">
           {(project.metrics ?? []).slice(0, 2).map((m) => (
-            <div key={m.label} className="flex flex-col-reverse gap-1.5">
+            <div key={m.label} className="flex flex-col-reverse justify-end gap-1.5">
               <dt className="text-[9.5px] font-semibold uppercase tracking-[0.16em] text-muted-foreground sm:text-[10px]">
                 {m.label}
               </dt>
               <dd className="text-xl font-light tracking-[-0.03em] sm:text-3xl">{m.value}</dd>
             </div>
           ))}
-          <div className="flex flex-col-reverse gap-1.5">
+          <div className="flex flex-col-reverse justify-end gap-1.5">
             <dt className="text-[9.5px] font-semibold uppercase tracking-[0.16em] text-muted-foreground sm:text-[10px]">
               Features
             </dt>
@@ -87,12 +87,12 @@ const FeaturedProject = ({ project, index }: { project: Project; index: number }
   const hidden = project.features.length - FEATURE_PREVIEW;
 
   return (
-    <article className="grid items-center gap-8 border-t border-border py-12 sm:gap-10 sm:py-16 lg:grid-cols-12 lg:gap-14 lg:py-20">
-      <Reveal className={cn("lg:col-span-7", flip && "lg:order-2")}>
+    <article className="grid grid-cols-1 items-center gap-8 border-t border-border py-12 sm:gap-10 sm:py-16 lg:grid-cols-12 lg:gap-14 lg:py-20">
+      <Reveal className={cn("min-w-0 lg:col-span-7", flip && "lg:order-2")}>
         <ProjectVisual project={project} index={index} />
       </Reveal>
 
-      <Reveal delay={0.1} className={cn("lg:col-span-5", flip && "lg:order-1")}>
+      <Reveal delay={0.1} className={cn("min-w-0 lg:col-span-5", flip && "lg:order-1")}>
         <p className="eyebrow mb-4 !text-primary">{project.tagline}</p>
         <h3 className="heading-lg !font-normal">{project.name}</h3>
         <p className="body mt-5">{project.description}</p>
@@ -130,7 +130,7 @@ const FeaturedProject = ({ project, index }: { project: Project; index: number }
         <div className="mt-8 flex flex-col gap-5 border-t border-border pt-6 sm:flex-row sm:items-center sm:justify-between">
           <p className="text-[12.5px] leading-relaxed text-muted-foreground">{project.stack.join(" · ")}</p>
           {(project.url || project.repo) && (
-            <div className="flex shrink-0 gap-2">
+            <div className="flex shrink-0 flex-wrap gap-2">
               {project.url && (
                 <a href={project.url} target="_blank" rel="noreferrer" className="btn-ghost !min-h-[42px] !px-5">
                   Visit site <ArrowUpRight className="h-3.5 w-3.5" />
